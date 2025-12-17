@@ -1,0 +1,105 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+ body {
+    background-image: url("fundo.jpeg");
+    background-size: cover; 
+    background-position: center; 
+    background-repeat: no-repeat;
+    margin: 0;
+    padding: 0;
+    font-family: 'georgia', serif;
+  }
+
+header {
+  text-align: center;
+  font-size: 48px;
+  margin-bottom: 30px;
+  font-weight: bold;
+  color: #2e7d32;
+}
+
+.Meus-Favoritos {
+  margin-top: 50px;
+}
+
+.livros {
+  display: grid;
+  grid-template-columns: repeat(auto-fill,minmax(220px,1fr));
+  gap: 20px;
+}
+
+
+.livro {
+  background-color: white;
+  border-radius: 10px;
+  padding: 15px;
+  box-shadow: 0 0 10px rgba(56, 142, 60, 0.3);
+  text-align: center;
+  transition: transform 0.2s ease;
+}
+
+.livro:hover {
+  transform: translateY(-5px);
+}
+
+.livro img {
+  width: 100%;
+  height: 300px;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-bottom: 15px;
+}
+
+.livro h3 {
+  font-size: 1.25rem;
+  margin-bottom: 10px;
+  color: #1b5e20;
+}
+
+.livro p {
+  font-weight: bold;
+  margin-bottom: 15px;
+  color: #388e3c;
+  font-size: 1.1rem;
+}
+
+.btn {
+  background-color: #388e3c;
+  border: none;
+  color: white;
+  padding: 10px 15px;
+  font-size: 1rem;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.btn:hover {
+  background-color: #2e7d32
+}
+.favoritar:hover {
+  color: #e53935 !important;
+}
+
+.favoritar.favorito {
+  color: #e53935 !important;
+}
+
+.rodape {
+  background-color: #c8e6c9;
+  padding: 20px;
+  text-align: center;
+  font-size: 14px;
+  color: #1b5e20;
+  margin-top: 40px;
+  border-top: 2px solid #81c784;
+  box-shadow: 0 -2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.rodape p {
+  margin: 5px 0;
+}
