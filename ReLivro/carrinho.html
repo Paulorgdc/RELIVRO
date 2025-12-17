@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Meu Carrinho - RELIVRO</title>
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    .voltar {
+      text-decoration: none;
+      color: #2e7d32;
+      font-weight: bold;
+    }
+
+    .carrinho-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 20px;
+      margin-top: 20px;
+    }
+
+    .item {
+      background: white;
+      padding: 15px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(56, 142, 60, 0.3);
+      text-align: center;
+    }
+
+    .item img {
+      width: 100%;
+      height: 250px;
+      object-fit: cover;
+      border-radius: 8px;
+    }
+
+    .item h3 {
+      margin: 10px 0;
+      font-size: 1.2rem;
+    }
+
+    .item p {
+      font-size: 1rem;
+      color: #388e3c;
+      margin-bottom: 10px;
+    }
+
+    .remover-btn {
+      background-color: #c62828;
+      color: white;
+      padding: 8px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .remover-btn:hover {
+      background-color: #b71c1c;
+    }
+
+    footer {
+      margin-top: 30px;
+      text-align: right;
+      font-size: 1.5rem;
+      font-weight: bold;
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    /* Botão finalizar compra */
+    #finalizarCompraBtn {
+      background-color: #2e7d32;
+      color: white;
+      border: none;
+      padding: 12px 20px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 1rem;
+      margin-top: 15px;
+    }
+    #finalizarCompraBtn:hover {
+      background-color: #27632a;
+    }
+
+    /* Modal */
+    .modal {
+      display: none; /* hidden por padrão */
+      position: fixed;
+      z-index: 1000;
+      left: 0; top: 0;
+      width: 100%; height: 100%;
+      background-color: rgba(0,0,0,0.5);
+      justify-content: center;
+      align-items: center;
+    }
+    .modal.active {
+      display: flex;
+    }
+    .modal-content {
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      width: 90%;
+      max-width: 400px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.3);
+      position: relative;
+    }
+    .modal-content h2 {
+      margin-top: 0;
+      color: #2e7d32;
+    }
+    .modal-content label {
+      display: block;
+      margin-top: 15px;
+      font-weight: bold;
+    }
+    .modal-content input[type="text"],
+    .modal-content input[type="number"] {
+      width: 100%;
+      padding: 8px;
+      margin-top: 5px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    .modal-content button {
+      margin-top: 20px;
+      background-color: #2e7d32;
+      color: white;
+      border: none;
+      padding: 10px;
+      width: 100%;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 1rem;
+    }
+    .modal-content button:hover {
+      background-color: #27632a;
+    }
+    .close-btn {
+      position: absolute;
+      top: 10px;
+      right: 15px;
+      background: transparent;
+      border: none;
+      font-size: 1.5rem;
+      cursor: pointer;
+      color: #666;
+    }
+    .close-btn:hover {
+      color: #000;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Meu Carrinho</h1>
+    <a href="#" class="voltar" onclick="history.back(); return false;">⬅ Voltar para Livros</a>
+  </header>
+
+  <main class="carrinho-container" id="carrinhoContainer"></main>
+
+  <footer>
+    <h2 id="total">Total: R$ 0,00</h2>
+    <button id="finalizarCompraBtn">Finalizar Compra</button>
+  </footer>
+
+  <!-- Modal de pagamento -->
+  <div class="modal" id="modalPagamento">
+    <div class="modal-content">
+      <button class="close-btn" id="fecharModal">&times;</button>
+      <h2>Escolha a forma de pagamento</h2>
+      <form id="formPagamento">
+        <label>
+          <input type="radio" name="pagamento" value="pix" required />
+          Pix
+        </label>
+        <label>
+          <input type="radio" name="pagamento" value="credito" />
+          Cartão de Crédito
+        </label>
+        <label>
+          <input type="radio" name="pagamento" value="debito" />
+          Cartão de Débito
+        </label>
+
+        <div id="dadosCartao" style="display:none; margin-top:15px;">
+          <label for="numeroCartao">Número do cartão:</label>
+          <input type="text" id="numeroCartao" name="numeroCartao" maxlength="16" placeholder="1234 5678 9012 3456" />
+
+          <label for="nomeCartao">Nome no cartão:</label>
+          <input type="text" id="nomeCartao" name="nomeCartao" placeholder="Nome completo" />
+
+          <label for="validadeCartao">Validade:</label>
+          <input type="text" id="validadeCartao" name="validadeCartao" maxlength="5" placeholder="MM/AA" />
+
+          <label for="cvvCartao">CVV:</label>
+          <input type="number" id="cvvCartao" name="cvvCartao" maxlength="3" placeholder="123" />
+        </div>
+
+        <button type="submit">Pagar</button>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const container = document.getElementById('carrinhoContainer');
+      const totalEl = document.getElementById('total');
+      const finalizarBtn = document.getElementById('finalizarCompraBtn');
+      const modal = document.getElementById('modalPagamento');
+      const fecharModalBtn = document.getElementById('fecharModal');
+      const formPagamento = document.getElementById('formPagamento');
+      const dadosCartao = document.getElementById('dadosCartao');
+
+      let carrinho = JSON.parse(localStorage.getItem('carrinho')) || [];
+
+      if (carrinho.length === 0) {
+        container.innerHTML = "<p>O carrinho está vazio.</p>";
+        totalEl.textContent = "Total: R$ 0,00";
+        finalizarBtn.style.display = 'none';
+        return;
+      }
+
+      function atualizarCarrinho() {
+        container.innerHTML = '';
+        let total = 0;
+
+        carrinho.forEach((livro, index) => {
+          total += livro.preco;
+
+          const div = document.createElement('div');
+          div.className = 'item';
+          div.innerHTML = `
+            <img src="${livro.imagem}" alt="${livro.titulo}">
+            <h3>${livro.titulo}</h3>
+            <p>Preço: R$ ${livro.preco.toFixed(2)}</p>
+            <button class="remover-btn" onclick="removerItem(${index})">Remover</button>
+          `;
+          container.appendChild(div);
+        });
+
+        totalEl.textContent = `Total: R$ ${total.toFixed(2)}`;
+      }
+
+      window.removerItem = function(index) {
+        carrinho.splice(index, 1);
+        localStorage.setItem('carrinho', JSON.stringify(carrinho));
+        atualizarCarrinho();
+
+        if (carrinho.length === 0) {
+          container.innerHTML = "<p>O carrinho está vazio.</p>";
+          totalEl.textContent = "Total: R$ 0,00";
+          finalizarBtn.style.display = 'none';
+        }
+      };
+
+      // Abrir modal ao clicar no botão
+      finalizarBtn.addEventListener('click', () => {
+        modal.classList.add('active');
+      });
+
+      // Fechar modal
+      fecharModalBtn.addEventListener('click', () => {
+        modal.classList.remove('active');
+        formPagamento.reset();
+        dadosCartao.style.display = 'none';
+      });
+
+      // Mostrar campos do cartão somente se crédito ou débito forem selecionados
+      formPagamento.pagamento.forEach(radio => {
+        radio.addEventListener('change', () => {
+          if(radio.value === 'credito' || radio.value === 'debito') {
+            dadosCartao.style.display = 'block';
+            // Tornar campos obrigatórios
+            dadosCartao.querySelectorAll('input').forEach(input => {
+              input.required = true;
+            });
+          } else {
+            dadosCartao.style.display = 'none';
+            dadosCartao.querySelectorAll('input').forEach(input => {
+              input.required = false;
+            });
+          }
+        });
+      });
+
+      // Submeter formulário
+      formPagamento.addEventListener('submit', (e) => {
+        e.preventDefault();
+
+        const formaPagamento = formPagamento.pagamento.value;
+
+        if(formaPagamento === 'pix') {
+          alert("Pagamento via Pix realizado com sucesso! Obrigado pela compra.");
+        } else if (formaPagamento === 'credito' || formaPagamento === 'debito') {
+          // Aqui você pode validar os dados do cartão antes de prosseguir
+          alert(`Pagamento via cartão (${formaPagamento}) realizado com sucesso! Obrigado pela compra.`);
+        } else {
+          alert("Selecione uma forma de pagamento válida.");
+          return;
+        }
+
+        // Após pagamento, limpar carrinho e fechar modal
+        localStorage.removeItem('carrinho');
+        carrinho = [];
+        atualizarCarrinho();
+        finalizarBtn.style.display = 'none';
+        modal.classList.remove('active');
+        formPagamento.reset();
+        dadosCartao.style.display = 'none';
+      });
+
+      atualizarCarrinho();
+    });
+  </script>
+</body>
+</html>
