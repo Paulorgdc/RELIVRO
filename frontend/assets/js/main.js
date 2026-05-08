@@ -1,9 +1,4 @@
 document.addEventListener("DOMContentLoaded", () => {
-    
-    // ==========================================
-    // 1. SISTEMA DE BLOQUEIO E CABEÇALHO (AUTENTICAÇÃO)
-    // ==========================================
-// Mude de localStorage para sessionStorage aqui:
     const currentUser = sessionStorage.getItem("currentUser");
 
     if (!currentUser) {
@@ -21,7 +16,6 @@ document.addEventListener("DOMContentLoaded", () => {
             link.addEventListener("click", (e) => {
                 e.preventDefault();
                 if(confirm("Deseja sair da sua conta?")) {
-                    // Mude para sessionStorage aqui também:
                     sessionStorage.removeItem("currentUser");
                     window.location.href = "templates/login.html";
                 }
@@ -29,9 +23,6 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 
-    // ==========================================
-    // 2. RENDERIZAÇÃO DOS LIVROS E FUNÇÕES DA LOJA
-    // ==========================================
     const staticBooks = [
         { title: "1984", price: 29.9, image: "assets/images/1984.jpg" },
         { title: "Capitães da Areia", price: 22.5, image: "assets/images/captains-of-the-sands.jpg" },
@@ -43,12 +34,10 @@ document.addEventListener("DOMContentLoaded", () => {
     const bookContainer = document.getElementById("books-container");
 
     function renderBooks() {
-        // Buscamos os favoritos atualizados toda vez que renderizamos
         const favorites = JSON.parse(localStorage.getItem("favorites")) || [];
         bookContainer.innerHTML = "";
 
         staticBooks.forEach((book, index) => {
-            // Verificamos se o livro está nos favoritos pelo TÍTULO
             const isFavorite = favorites.some(fav => fav.title === book.title);
             
             const card = document.createElement("div");
@@ -78,7 +67,6 @@ document.addEventListener("DOMContentLoaded", () => {
         const originalText = currentButton.innerText;
 
         currentButton.innerText = "Adicionado!";
-        // Caso queira um efeito no botão, pode manter essas classes (certifique-se de tê-las no CSS)
         currentButton.classList.add("success", "btn-added-anim");
 
         setTimeout(() => {
@@ -91,11 +79,10 @@ document.addEventListener("DOMContentLoaded", () => {
         let favorites = JSON.parse(localStorage.getItem("favorites")) || [];
         const book = staticBooks[index];
         
-        // Procura se o livro já está na lista pelo título
         const favIndex = favorites.findIndex(item => item.title === book.title);
         
         if (favIndex === -1) {
-            favorites.push(book); // Salva o objeto completo
+            favorites.push(book);
             element.classList.add("active");
         } else {
             favorites.splice(favIndex, 1);

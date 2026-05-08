@@ -35,7 +35,6 @@
 
 <script>
 document.addEventListener("DOMContentLoaded", () => {
-    // Bloqueio de segurança e Nome do Usuário
     const currentUser = sessionStorage.getItem("currentUser");
     
     if (!currentUser) {
@@ -45,13 +44,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const navContainer = document.querySelector('.nav-links');
     if (navContainer) {
-        // Cria o link do usuário
         const userLink = document.createElement('a');
         userLink.href = "#";
         userLink.innerHTML = `<i class="fa fa-user" style="margin-right: 5px;"></i> Olá, ${currentUser}`;
         userLink.title = "Clique para sair da conta";
         
-        // Adiciona a função de Deslogar
         userLink.addEventListener("click", (e) => {
             e.preventDefault();
             if(confirm("Deseja sair da sua conta?")) {
@@ -60,13 +57,12 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         });
 
-        // Insere o nome do usuário antes do botão "Meus Favoritos"
         navContainer.insertBefore(userLink, navContainer.firstChild);
     }
     
     const container = document.getElementById("cart-container");
     const totalPriceElement = document.getElementById("total-price");
-    const checkoutSection = document.querySelector(".checkout-section"); // Pega a barra inferior
+    const checkoutSection = document.querySelector(".checkout-section");
     
     let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
@@ -75,7 +71,6 @@ document.addEventListener("DOMContentLoaded", () => {
         let total = 0;
 
         if (cart.length === 0) {
-            // Carrinho vazio: Mostra a mensagem e ESCONDE a barra de checkout
             container.innerHTML = `
                 <div class="empty-state">
                     <i class="fa fa-shopping-cart" style="font-size: 4rem; color: #388e3c; margin-bottom: 15px;"></i>
@@ -83,11 +78,10 @@ document.addEventListener("DOMContentLoaded", () => {
                     <a href="../index.html" class="btn" style="text-decoration: none; display: inline-block; width: auto;">Voltar para a Loja</a>
                 </div>
             `;
-            if (checkoutSection) checkoutSection.style.display = "none"; // Esconde a barra flutuante
+            if (checkoutSection) checkoutSection.style.display = "none";
             return;
         }
 
-        // Carrinho com itens: MOSTRA a barra de checkout
         if (checkoutSection) checkoutSection.style.display = "flex";
 
         cart.forEach((book, index) => {

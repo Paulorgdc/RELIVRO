@@ -12,14 +12,11 @@ body {
     min-height: 100vh; 
     font-family: "Poppins", sans-serif;
     background-color: #F1F5F9; 
-    padding-top: 75px; /* Reduzido para ganhar espaço na tela */
+    padding-top: 75px;
     padding-bottom: 0; 
     color: #0F172A;
 }
 
-/* =========================================
-   HEADER: VERDE CLARO ESTILO LOGIN
-   ========================================= */
 .main-header {
     position: fixed;
     top: 0;
@@ -82,21 +79,15 @@ body {
     transform: translateY(-2px);
 }
 
-/* =========================================
-   TÍTULOS DA PÁGINA
-   ========================================= */
 .page-title {
     color: #0F172A;
     font-size: 2rem;
     font-weight: 800;
     text-align: center;
-    margin: 15px 0 15px 0; /* Compacto */
+    margin: 15px 0 15px 0;
     width: 100%;
 }
 
-/* =========================================
-   GRID E CONTAINERS (Essencial para o Layout)
-   ========================================= */
 .cart-main-container {
     flex: 1; 
     display: flex;
@@ -118,9 +109,6 @@ body {
     width: 100%;
 }
 
-/* =========================================
-   CARDS COMPACTOS
-   ========================================= */
 .book-card {
     background-color: #FFFFFF;
     border-radius: 16px; 
@@ -143,7 +131,7 @@ body {
 
 .book-card img {
     width: 100%;
-    height: 190px; /* Mais curtos para caber na tela */
+    height: 190px;
     object-fit: cover;
     border-radius: 8px;
     margin-bottom: 12px;
@@ -166,7 +154,6 @@ body {
     margin-bottom: 15px;
 }
 
-/* Coração Favorito Compacto */
 .favorite-icon {
     position: absolute;
     top: 20px;
@@ -192,9 +179,6 @@ body {
     transform: scale(1.1);
 }
 
-/* =========================================
-   BOTÕES MENORES E ELEGANTES
-   ========================================= */
 .btn {
     background-color: #0F172A; 
     color: #FFFFFF !important;
@@ -214,9 +198,6 @@ body {
     box-shadow: 0 6px 15px rgba(76, 175, 80, 0.3);
 }
 
-/* =========================================
-   CHECKOUT NO FINAL DA LISTA (Fixo no grid)
-   ========================================= */
 .checkout-section {
     width: 90%;
     max-width: 800px;
@@ -227,7 +208,7 @@ body {
     justify-content: space-between;
     align-items: center;
     box-shadow: 0 15px 30px rgba(0,0,0,0.15);
-    margin: 20px auto 25px auto; /* Enxuto para caber sem rolar a tela */
+    margin: 20px auto 25px auto;
 }
 
 .total-box span {
@@ -263,22 +244,16 @@ body {
     transform: scale(1.05);
 }
 
-/* =========================================
-   FOOTER (Colado no chão)
-   ========================================= */
-/* =========================================
-   FOOTER (Com fundo cinza sutil)
-   ========================================= */
 .footer {
-    background-color: #E2E8F0; /* O cinzinha um pouco mais escuro */
-    color: #475569; /* Texto ligeiramente mais escuro para dar contraste */
+    background-color: #E2E8F0;
+    color: #475569;
     text-align: center;
     padding: 25px 20px;
     margin-top: auto; 
     position: relative;
     z-index: 100;
     width: 100%;
-    border-top: 1px solid #CBD5E1; /* Linha bem fina e elegante separando do site */
+    border-top: 1px solid #CBD5E1;
 }
 
 .footer p {
@@ -292,7 +267,6 @@ body {
     font-weight: 700;
 }
 
-/* State Vazio */
 .empty-state {
     background-color: #FFFFFF;
     padding: 60px 30px;

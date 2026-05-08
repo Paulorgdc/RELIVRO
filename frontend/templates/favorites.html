@@ -28,7 +28,6 @@
 
     <script>
 document.addEventListener("DOMContentLoaded", () => {
-    // Bloqueio de segurança e Nome do Usuário
     const currentUser = sessionStorage.getItem("currentUser");
     
     if (!currentUser) {
@@ -38,13 +37,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const navContainer = document.querySelector('.nav-links');
     if (navContainer) {
-        // Cria o link do usuário
         const userLink = document.createElement('a');
         userLink.href = "#";
         userLink.innerHTML = `<i class="fa fa-user" style="margin-right: 5px;"></i> Olá, ${currentUser}`;
         userLink.title = "Clique para sair da conta";
         
-        // Adiciona a função de Deslogar
         userLink.addEventListener("click", (e) => {
             e.preventDefault();
             if(confirm("Deseja sair da sua conta?")) {
@@ -53,7 +50,6 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         });
 
-        // Insere o nome do usuário antes do botão "Meus Favoritos"
         navContainer.insertBefore(userLink, navContainer.firstChild);
     }
     
@@ -64,7 +60,6 @@ document.addEventListener("DOMContentLoaded", () => {
         let favorites = JSON.parse(rawData) || [];
         container.innerHTML = "";
 
-        // Filtra para garantir que os dados não estão corrompidos
         const validFavorites = favorites.filter(book => typeof book === "object" && book !== null && book.title);
 
         if (validFavorites.length === 0) {
@@ -96,7 +91,7 @@ document.addEventListener("DOMContentLoaded", () => {
         let favs = JSON.parse(localStorage.getItem("favorites")) || [];
         favs.splice(index, 1);
         localStorage.setItem("favorites", JSON.stringify(favs));
-        renderFavorites(); // Atualiza a tela na hora
+        renderFavorites();
     };
 
     window.addToCartFromFavs = (index) => {
@@ -105,7 +100,6 @@ document.addEventListener("DOMContentLoaded", () => {
         cart.push(favs[index]);
         localStorage.setItem("cart", JSON.stringify(cart));
         
-        // Efeito visual no botão de comprar dos favoritos
         const btns = document.querySelectorAll("#favorites-container .btn");
         if(btns[index]) {
             btns[index].innerText = "Adicionado!";
