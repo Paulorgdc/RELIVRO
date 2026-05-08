@@ -6,7 +6,7 @@
 ![NodeJS](https://img.shields.io/badge/node.js-6DA55F?style=for-the-badge&logo=node.js&logoColor=white)
 ![Express.js](https://img.shields.io/badge/express.js-%23404d59.svg?style=for-the-badge&logo=express&logoColor=%2361DAFB)
 
-**Re-Livro** is a high-end online marketplace designed for book enthusiasts to discover, buy, and exchange literature. It features a seamless user experience focused on sustainability and cultural access, providing a specialized environment for building a circular economy among readers.
+**RELIVRO** is a high-end online marketplace designed for book enthusiasts to discover, buy, and exchange literature. It features a seamless user experience focused on sustainability and cultural access, providing a specialized environment for building a circular economy among readers.
 
 ---
 
