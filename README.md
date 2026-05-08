@@ -24,8 +24,10 @@
 ## 📸 Screenshots
 
 ### Platform Entrance
-![Login Screen](frontend/assets/screenshots/login.png)
-![Register Screen](frontend/assets/screenshots/register.png)
+<p align="center">
+  <img src="frontend/assets/screenshots/login.png" width="45%" alt="Login Screen" />
+  <img src="frontend/assets/screenshots/register.png" width="45%" alt="Register Screen" />
+</p>
 
 ### Shopping Experience
 <p align="center">
