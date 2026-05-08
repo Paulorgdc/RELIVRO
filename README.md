@@ -34,8 +34,8 @@
 
 ### Cart & Favorites
 <p align="center">
-  <img src="frontend/assets/screenshots/cart.png" width="45%" alt="Shopping Cart" />
-  <img src="frontend/assets/screenshots/favorites.png" width="45%" alt="Wishlist" />
+  <img src="frontend/assets/screenshots/cart.png" height="250" alt="Shopping Cart" />
+  <img src="frontend/assets/screenshots/favorites.png" height="250" alt="Wishlist" />
 </p>
 
 ### Empty States
