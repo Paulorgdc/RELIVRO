@@ -23,16 +23,13 @@
 
 ## 📸 Screenshots
 
+### Shopping Experience
+![Home Page](frontend/assets/screenshots/home.png)
+
 ### Platform Entrance
 <p align="center">
   <img src="frontend/assets/screenshots/login.png" width="45%" alt="Login Screen" />
   <img src="frontend/assets/screenshots/register.png" width="45%" alt="Register Screen" />
-</p>
-
-### Shopping Experience
-<p align="center">
-  <img src="frontend/assets/screenshots/home.png" width="45%" alt="Home Marketplace" />
-  <img src="frontend/assets/screenshots/home-active.png" width="45%" alt="Interactive Grid" />
 </p>
 
 ### Cart & Favorites
