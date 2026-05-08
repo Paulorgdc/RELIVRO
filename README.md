@@ -6,42 +6,42 @@
 ![NodeJS](https://img.shields.io/badge/node.js-6DA55F?style=for-the-badge&logo=node.js&logoColor=white)
 ![Express.js](https://img.shields.io/badge/express.js-%23404d59.svg?style=for-the-badge&logo=express&logoColor=%2361DAFB)
 
-Developed as part of the **Extensionist Integrator Project (UNIVAG, 3rd Semester, Software Engineering, 2026)**, **Re-Livro** is a high-end online platform for book lovers to announce, sell, and exchange books. Its core mission is to promote the reuse of literature, expanding cultural access and sustainability through a circular economy for readers.
+**Re-Livro** is a high-end online marketplace designed for book enthusiasts to discover, buy, and exchange literature. It features a seamless user experience focused on sustainability and cultural access, providing a specialized environment for building a circular economy among readers.
 
 ---
 
-## 🚀 Key Features
+## 🚀 Features
 
-- **Premium UI/UX:** A modern interface featuring *Glassmorphism* effects, high-contrast typography, and fluid layouts.
-- **Smart Authentication:** Secure login and registration system with real-time field validation and personalized greetings ("Olá, User").
-- **Dynamic Catalog:** An interactive book grid with "Buy" and "Favorite" functionalities.
-- **Shopping Cart & Checkout:** A seamless cart experience with automatic total calculation and a non-intrusive checkout flow.
-- **Persistent Storage:** Utilizes `localStorage` and `sessionStorage` to maintain user sessions and cart items even after page refreshes.
-- **Role-Based Access:** Content protection that ensures only authenticated users can access the marketplace and their personal dashboards.
+- **Premium Marketplace UI:** A modern storefront with a focus on high-end typography and fluid responsiveness.
+- **Smart Authentication:** Integrated login and registration system with real-time validation and persistent user sessions.
+- **Interactive Wishlist:** Specialized dashboard for managing favorite titles using local data persistence.
+- **Dynamic Shopping Cart:** Real-time cart management with automated price calculation and a streamlined checkout flow.
+- **Session Management:** Secure access control ensuring personalized experiences and protected routes for authenticated users.
+- **Sustainability Driven:** Core architecture designed to facilitate book exchanges, promoting the reuse of cultural assets.
 
 ---
 
 ## 📸 Screenshots
 
 ### Platform Entrance
-![Login Screen](screenshots/login.png)
+![Login Screen](frontend/assets/screenshots/login.png)
 
 ### Shopping Experience
 <p align="center">
-  <img src="screenshots/home.png" width="45%" alt="Home Marketplace" />
-  <img src="screenshots/home-active.png" width="45%" alt="Interactive Grid" />
+  <img src="frontend/assets/screenshots/home.png" width="45%" alt="Home Marketplace" />
+  <img src="frontend/assets/screenshots/home-active.png" width="45%" alt="Interactive Grid" />
 </p>
 
 ### Cart & Favorites
 <p align="center">
-  <img src="screenshots/cart.png" width="45%" alt="Shopping Cart" />
-  <img src="screenshots/favorites.png" width="45%" alt="Wishlist" />
+  <img src="frontend/assets/screenshots/cart.png" width="45%" alt="Shopping Cart" />
+  <img src="frontend/assets/screenshots/favorites.png" width="45%" alt="Wishlist" />
 </p>
 
 ### Empty States
 <p align="center">
-  <img src="screenshots/cart-empty.png" width="45%" alt="Empty Cart" />
-  <img src="screenshots/favorites-empty.png" width="45%" alt="Empty Favorites" />
+  <img src="frontend/assets/screenshots/cart-empty.png" width="45%" alt="Empty Cart" />
+  <img src="frontend/assets/screenshots/favorites-empty.png" width="45%" alt="Empty Favorites" />
 </p>
 
 ---
