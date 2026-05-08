@@ -1,71 +1,93 @@
-const nameInput = document.querySelector('#name');
-const labelName = document.querySelector('#labelName');
-let isNameValid = false;
+// Funcionalidade de clicar no olho para ver a senha
+let btnViewPass = document.getElementById('viewPassword');
+let btnViewConfirmPass = document.getElementById('viewConfirmPassword');
 
-const usernameInput = document.querySelector('#username');
-const labelUsername = document.querySelector('#labelUsername');
-let isUserValid = false;
-
-const passwordInput = document.querySelector('#password');
-const labelPassword = document.querySelector('#labelPassword');
-let isPassValid = false;
-
-const confirmPasswordInput = document.querySelector('#confirmPassword');
-const labelConfirmPassword = document.querySelector('#labelConfirmPassword');
-let isConfirmPassValid = false;
-
-nameInput.addEventListener('keyup', () => {
-  if (nameInput.value.length <= 2) {
-    labelName.style.color = 'red';
-    labelName.innerHTML = 'Nome *Insira no mínimo 3 caracteres';
-    nameInput.style.borderColor = 'red';
-    isNameValid = false;
-  } else {
-    labelName.style.color = 'green';
-    labelName.innerHTML = 'Nome';
-    nameInput.style.borderColor = 'green';
-    isNameValid = true;
-  }
-});
-
-usernameInput.addEventListener('keyup', () => {
-  if (usernameInput.value.length <= 4) {
-    labelUsername.style.color = 'red';
-    labelUsername.innerHTML = 'Usuário *Insira no mínimo 5 caracteres';
-    usernameInput.style.borderColor = 'red';
-    isUserValid = false;
-  } else {
-    labelUsername.style.color = 'green';
-    labelUsername.innerHTML = 'Usuário';
-    usernameInput.style.borderColor = 'green';
-    isUserValid = true;
-  }
-});
-
-function register() {
-  const errorMsg = document.querySelector('#msg-error');
-  const successMsg = document.querySelector('#msg-success');
-
-  if (isNameValid && isUserValid && isPassValid && isConfirmPassValid) {
-    let userList = JSON.parse(localStorage.getItem('userList') || '[]');
-    
-    userList.push({
-      name: nameInput.value,
-      username: usernameInput.value,
-      password: passwordInput.value
+if(btnViewPass) {
+    btnViewPass.addEventListener('click', () => {
+        let inputPassword = document.getElementById('password');
+        if(inputPassword.getAttribute('type') == 'password') {
+            inputPassword.setAttribute('type', 'text');
+            btnViewPass.classList.replace('fa-eye', 'fa-eye-slash');
+        } else {
+            inputPassword.setAttribute('type', 'password');
+            btnViewPass.classList.replace('fa-eye-slash', 'fa-eye');
+        }
     });
+}
+
+if(btnViewConfirmPass) {
+    btnViewConfirmPass.addEventListener('click', () => {
+        let inputConfirmPassword = document.getElementById('confirm-password');
+        if(inputConfirmPassword.getAttribute('type') == 'password') {
+            inputConfirmPassword.setAttribute('type', 'text');
+            btnViewConfirmPass.classList.replace('fa-eye', 'fa-eye-slash');
+        } else {
+            inputConfirmPassword.setAttribute('type', 'password');
+            btnViewConfirmPass.classList.replace('fa-eye-slash', 'fa-eye');
+        }
+    });
+}
+
+// Lógica de Cadastro
+function register() {
+    let name = document.getElementById('name').value;
+    let username = document.getElementById('username').value;
+    let password = document.getElementById('password').value;
+    let confirmPassword = document.getElementById('confirm-password').value;
+    let msgError = document.getElementById('msg-error');
+
+    // Reseta a mensagem de erro a cada clique
+    msgError.style.display = 'none';
+    msgError.innerHTML = '';
+
+    // VALIDAÇÕES REDUZIDAS (Apenas impede de enviar vazio)
+    if (name.length < 1) {
+        showError("Por favor, preencha o Nome Completo.");
+        return; 
+    }
+
+    if (username.length < 1) {
+        showError("Por favor, preencha o Usuário.");
+        return;
+    }
+
+    if (password.length < 1) {
+        showError("Por favor, crie uma Senha.");
+        return;
+    }
+
+    if (password !== confirmPassword) {
+        showError("As senhas não conferem.");
+        return;
+    }
+
+    // SE PASSOU POR TODAS AS VALIDAÇÕES (Sucesso!)
     
-    localStorage.setItem('userList', JSON.stringify(userList));
-    
-    successMsg.style.display = 'block';
-    successMsg.innerHTML = '<strong>Cadastrando usuário...</strong>';
-    errorMsg.style.display = 'none';
-    
-    setTimeout(() => {
-        window.location.href = 'login.html';
-    }, 2000);
-  } else {
-    errorMsg.style.display = 'block';
-    errorMsg.innerHTML = '<strong>Preencha todos os campos corretamente antes de cadastrar</strong>';
-  }
+    // 1. Puxa a lista de usuários salvos (ou cria uma vazia se não existir)
+// 1. Puxa a lista (Agora usando sessionStorage)
+    let userList = JSON.parse(sessionStorage.getItem("userList") || "[]");
+
+    let userExists = userList.find(user => user.username === username);
+    if (userExists) {
+        showError("Esse nome de usuário já está em uso!");
+        return;
+    }
+
+    // 3. Salva o novo usuário (Agora usando sessionStorage)
+    userList.push({ 
+        name: name, 
+        username: username, 
+        password: password 
+    });
+    sessionStorage.setItem("userList", JSON.stringify(userList));
+
+    // 4. REDIRECIONA DIRETO PARA O LOGIN! 🚀
+    window.location.href = "login.html";
+}
+
+// Função auxiliar para mostrar erros na caixinha vermelha
+function showError(message) {
+    let msgError = document.getElementById('msg-error');
+    msgError.innerHTML = message;
+    msgError.style.display = 'block';
 }

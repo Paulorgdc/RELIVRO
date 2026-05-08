@@ -1,69 +1,129 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-  <meta charset="UTF-8" />
-  <title>Meu Carrinho - RELIVRO</title>
-  <style>
-    body { background-color: #E8F5E9; font-family: 'Georgia', serif; margin: 0; padding-top: 100px; }
-    .topo { background-color: #2e7d32; color: white; display: flex; justify-content: space-between; padding: 15px 30px; position: fixed; top: 0; width: 100%; z-index: 1000; box-sizing: border-box; }
-    .menu a { color: white; text-decoration: none; margin-left: 20px; font-weight: bold; }
-    .cart-container { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 20px; padding: 20px; }
-    .book-card { background: white; padding: 15px; border-radius: 10px; text-align: center; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
-    .book-card img { width: 100%; height: 250px; object-fit: cover; border-radius: 5px; }
-    .remove-btn { background: #c62828; color: white; border: none; padding: 8px; border-radius: 5px; cursor: pointer; }
-    .footer-cart { padding: 20px; text-align: right; }
-  </style>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Meu Carrinho - RELIVRO</title>
+    
+    <link rel="stylesheet" href="../assets/css/style.css" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 <body>
-<header class="topo">
-  <div class="logo">Relivro</div>
-  <nav class="menu">
-    <a href="../index.html">Livros</a>
-    <a href="favorites.html">Favoritos</a>
-  </nav>
+<header class="main-header">
+    <div class="header-content">
+        <a href="../index.html" class="logo-container" style="text-decoration: none;">
+            <img src="../assets/images/logo.jpeg" alt="Logo Relivro" class="header-logo">
+            <span class="logo">Relivro</span>
+        </a>
+
+        <nav class="nav-links">
+            <a href="favorites.html">
+                <i class="fa fa-heart"></i> Meus Favoritos
+            </a>
+            <a href="cart.html">
+                <i class="fa fa-shopping-cart"></i> Meu Carrinho
+            </a>
+        </nav>
+    </div>
 </header>
 
-<h1 style="padding: 0 20px;">Meu Carrinho</h1>
-<main class="cart-container" id="cart-container"></main>
-
-<footer class="footer-cart">
-  <h2 id="total-price">Total: R$ 0,00</h2>
-  <button id="checkout-btn">Finalizar Compra</button>
-</footer>
+<main class="cart-main-container">
+    <h1 class="page-title">Meu Carrinho</h1>
+    
+    <div class="books-grid" id="cart-container"></div>
+</main>
 
 <script>
-  document.addEventListener('DOMContentLoaded', () => {
-    const container = document.getElementById('cart-container');
-    const totalDisplay = document.getElementById('total-price');
-    let cart = JSON.parse(localStorage.getItem('cart')) || [];
+document.addEventListener("DOMContentLoaded", () => {
+    // Bloqueio de segurança e Nome do Usuário
+    const currentUser = sessionStorage.getItem("currentUser");
+    
+    if (!currentUser) {
+        window.location.href = "login.html"; 
+        return; 
+    }
+
+    const navContainer = document.querySelector('.nav-links');
+    if (navContainer) {
+        // Cria o link do usuário
+        const userLink = document.createElement('a');
+        userLink.href = "#";
+        userLink.innerHTML = `<i class="fa fa-user" style="margin-right: 5px;"></i> Olá, ${currentUser}`;
+        userLink.title = "Clique para sair da conta";
+        
+        // Adiciona a função de Deslogar
+        userLink.addEventListener("click", (e) => {
+            e.preventDefault();
+            if(confirm("Deseja sair da sua conta?")) {
+                sessionStorage.removeItem("currentUser");
+                window.location.href = "login.html";
+            }
+        });
+
+        // Insere o nome do usuário antes do botão "Meus Favoritos"
+        navContainer.insertBefore(userLink, navContainer.firstChild);
+    }
+    
+    const container = document.getElementById("cart-container");
+    const totalPriceElement = document.getElementById("total-price");
+    const checkoutSection = document.querySelector(".checkout-section"); // Pega a barra inferior
+    
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
     function renderCart() {
-      container.innerHTML = cart.length === 0 ? "<p>O carrinho está vazio.</p>" : "";
-      let total = 0;
+        container.innerHTML = "";
+        let total = 0;
 
-      cart.forEach((book, index) => {
-        total += book.price;
-        const div = document.createElement('div');
-        div.className = 'book-card';
-        div.innerHTML = `
-          <img src="${book.image.startsWith('http') ? book.image : '../' + book.image}" alt="${book.title}">
-          <h3>${book.title}</h3>
-          <p>R$ ${book.price.toFixed(2)}</p>
-          <button class="remove-btn" onclick="removeItem(${index})">Remover</button>
-        `;
-        container.appendChild(div);
-      });
-      totalDisplay.textContent = `Total: R$ ${total.toFixed(2)}`;
+        if (cart.length === 0) {
+            // Carrinho vazio: Mostra a mensagem e ESCONDE a barra de checkout
+            container.innerHTML = `
+                <div class="empty-state">
+                    <i class="fa fa-shopping-cart" style="font-size: 4rem; color: #388e3c; margin-bottom: 15px;"></i>
+                    <p style="font-size: 1.2rem; color: #333; font-weight: 500; margin-bottom: 20px;">Seu carrinho está vazio.</p>
+                    <a href="../index.html" class="btn" style="text-decoration: none; display: inline-block; width: auto;">Voltar para a Loja</a>
+                </div>
+            `;
+            if (checkoutSection) checkoutSection.style.display = "none"; // Esconde a barra flutuante
+            return;
+        }
+
+        // Carrinho com itens: MOSTRA a barra de checkout
+        if (checkoutSection) checkoutSection.style.display = "flex";
+
+        cart.forEach((book, index) => {
+            total += book.price;
+            const card = document.createElement("div");
+            card.className = "book-card";
+            card.innerHTML = `
+                <img src="../${book.image}" alt="${book.title}">
+                <h3>${book.title}</h3>
+                <p>R$ ${book.price.toFixed(2)}</p>
+                <button class="btn" style="background-color: #e53935;" onclick="removeItem(${index})">Remover</button>
+            `;
+            container.appendChild(card);
+        });
+
+        totalPriceElement.innerText = `R$ ${total.toFixed(2)}`;
     }
 
     window.removeItem = (index) => {
-      cart.splice(index, 1);
-      localStorage.setItem('cart', JSON.stringify(cart));
-      renderCart();
+        cart.splice(index, 1);
+        localStorage.setItem("cart", JSON.stringify(cart));
+        renderCart();
     };
 
     renderCart();
-  });
+});
 </script>
+
+<div class="checkout-section">
+    <div class="total-box">
+        <span>Total da Compra</span>
+        <strong id="total-price">R$ 0,00</strong>
+    </div>
+    <button class="btn-checkout" onclick="openPaymentModal()">
+        Finalizar Compra
+    </button>
+</div>
 </body>
 </html>

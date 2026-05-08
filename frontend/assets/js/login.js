@@ -1,44 +1,45 @@
-const passwordToggle = document.querySelector('.fa-eye');
-
-passwordToggle.addEventListener('click', () => {
-  const passwordInput = document.querySelector('#password');
-  const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
-  passwordInput.setAttribute('type', type);
-});
-
-function login() {
-  const userInput = document.querySelector('#username');
-  const userLabel = document.querySelector('#userLabel');
-  const passwordInput = document.querySelector('#password');
-  const passwordLabel = document.querySelector('#passwordLabel');
-  const errorMessage = document.querySelector('#msg-error');
-  
-  let userList = JSON.parse(localStorage.getItem('userList') || '[]');
-  let authenticatedUser = { name: null, user: null, password: null };
-
-  userList.forEach((item) => {
-    if (userInput.value === item.username && passwordInput.value === item.password) {
-      authenticatedUser = {
-        name: item.name,
-        user: item.username,
-        password: item.password
-      };
-    }
-  });
-
-  if (userInput.value === authenticatedUser.user && passwordInput.value === authenticatedUser.password) {
-    const token = Math.random().toString(16).substr(2) + Math.random().toString(16).substr(2);
-    localStorage.setItem('token', token);
-    localStorage.setItem('loggedUser', JSON.stringify(authenticatedUser));
-    
-    window.location.href = '../index.html'; 
-  } else {
-    userLabel.style.color = 'red';
-    userInput.style.borderColor = 'red';
-    passwordLabel.style.color = 'red';
-    passwordInput.style.borderColor = 'red';
-    errorMessage.style.display = 'block';
-    errorMessage.innerHTML = 'Usuário ou senha incorretos';
-    userInput.focus();
-  }
+// Funcionalidade de clicar no olho para ver a senha
+let btnViewPass = document.querySelector('.fa-eye');
+if(btnViewPass) {
+    btnViewPass.addEventListener('click', () => {
+        let inputPassword = document.getElementById('password');
+        if(inputPassword.getAttribute('type') == 'password') {
+            inputPassword.setAttribute('type', 'text');
+            btnViewPass.classList.replace('fa-eye', 'fa-eye-slash');
+        } else {
+            inputPassword.setAttribute('type', 'password');
+            btnViewPass.classList.replace('fa-eye-slash', 'fa-eye');
+        }
+    });
 }
+
+// Lógica de Login
+function login() {
+    let usernameInput = document.getElementById('username').value;
+    let passwordInput = document.getElementById('password').value;
+    let msgError = document.getElementById('msg-error');
+
+    // Reseta a mensagem de erro
+    msgError.style.display = 'none';
+
+    // Validação: Mínimo de 1 caractere
+    if (usernameInput.length < 1 || passwordInput.length < 1) {
+        msgError.innerHTML = "Por favor, preencha usuário e senha.";
+        msgError.style.display = 'block';
+        return;
+    }
+
+    // Puxa a lista de usuários criados lá no register.js
+// Puxa a lista usando sessionStorage
+    let userList = JSON.parse(sessionStorage.getItem("userList") || "[]");
+
+    let validUser = userList.find(user => user.username === usernameInput && user.password === passwordInput);
+
+    if (validUser) {
+        // Salva quem está logado no sessionStorage
+        sessionStorage.setItem("currentUser", validUser.username); 
+        window.location.href = "../index.html"; 
+    } else {
+        msgError.innerHTML = "Usuário ou senha incorretos.";
+        msgError.style.display = 'block';
+    }}

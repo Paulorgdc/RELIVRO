@@ -1,144 +1,188 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
 
 * {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: 'Roboto', sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
 }
 
 body {
-  background-image: url("../images/background.jpeg");
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-attachment: fixed;
+    background-image: url("../images/background.jpeg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
 }
 
 .container {
-  display: flex;
-  justify-content: center;
-  width: 100%;
-  margin-top: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    padding: 10px; /* Reduzido para dar mais espaço */
 }
 
+/* CARTÃO MAIS COMPACTO */
 .card {
-  background-color: rgba(255, 255, 255, 0.5);
-  border-radius: 15px;
-  box-shadow: 3px 3px 10px rgba(11, 110, 2, 0.3);
-  width: 100%;
-  max-width: 400px;
+    background-color: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    padding: 30px 35px; /* Reduzido de 45px para "apertar" o conteúdo */
+    border-radius: 24px;
+    box-shadow: 0 25px 50px rgba(0,0,0,0.2);
+    border: 1px solid rgba(255,255,255,0.4);
+    width: 100%;
+    max-width: 400px;
+    display: flex;
+    flex-direction: column;
 }
 
-h1, h2 {
-  text-align: center;
-  color: #000000;
+.brand-header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 5px;
+}
+
+.logo-img {
+    height: 35px; /* Logo ligeiramente menor */
+    width: auto;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+h1 {
+    color: #0F172A;
+    font-size: 1.8rem;
+    font-weight: 800;
+    letter-spacing: -0.5px;
 }
 
 h2 {
-  margin-bottom: 30px;
-  font-weight: 400;
+    text-align: center;
+    color: #64748B;
+    font-weight: 500;
+    font-size: 1rem;
+    margin-bottom: 20px; /* Reduzido */
 }
 
+/* CAMPOS DE TEXTO MAIS JUNTOS */
 .label-float {
-  position: relative;
-  padding-top: 13px;
-  margin: 5% 0;
+    position: relative;
+    margin-bottom: 22px; /* Margem reduzida para o formulário encolher */
 }
 
 .label-float input {
-  width: 100%;
-  padding: 5px;
-  border: 0;
-  border-bottom: 2px solid #272262;
-  background-color: transparent;
-  outline: none;
-  font-size: 16px;
-  transition: all .3s ease-out;
-}
-
-.label-float input:focus {
-  border-bottom: 2px solid #4038a0;
+    width: 100%;
+    padding: 8px 0; /* Menos altura no input */
+    border: none;
+    border-bottom: 2px solid #CBD5E1;
+    background-color: transparent;
+    outline: none;
+    font-size: 0.95rem;
+    color: #0F172A;
+    transition: all 0.3s ease;
 }
 
 .label-float label {
-  color: #272262;
-  pointer-events: none;
-  position: absolute;
-  top: 0;
-  left: 0;
-  margin-top: 13px;
-  transition: all .3s ease-out;
+    position: absolute;
+    top: 8px; /* Ajustado para a nova altura */
+    left: 0;
+    color: #94A3B8;
+    pointer-events: none;
+    transition: all 0.3s ease;
+    font-weight: 400;
+    font-size: 0.95rem;
+}
+
+.label-float input:focus,
+.label-float input:valid {
+    border-bottom: 2px solid #10B981;
 }
 
 .label-float input:focus + label,
 .label-float input:valid + label {
-  font-size: 13px;
-  margin-top: 0;
-  color: #4038a0;
-}
-
-button {
-  width: 100%;
-  background-color: transparent;
-  border: 2px solid #87D51D;
-  color: #272262;
-  padding: 10px;
-  font-weight: bold;
-  font-size: 12pt;
-  margin-top: 20px;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: all .4s ease-out;
-}
-
-button:hover {
-  background-color: #87D51D;
-  color: #000000;
-}
-
-.justify-center {
-  display: flex;
-  justify-content: center;
-}
-
-hr {
-  margin: 10% auto;
-  width: 60%;
-  border: 0;
-  border-top: 1px solid #ccc;
-}
-
-p {
-  color: #272262;
-  font-size: 14pt;
-  text-align: center;
-}
-
-a {
-  color: #000000;
-  font-weight: bold;
-  text-decoration: none;
-  transition: all .3s ease-out;
-}
-
-a:hover {
-  color: #272262;
+    top: -16px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: #10B981;
 }
 
 .fa-eye {
-  position: absolute;
-  top: 15px;
-  right: 10px;
-  cursor: pointer;
-  color: #272262;
+    position: absolute;
+    top: 10px;
+    right: 5px;
+    cursor: pointer;
+    color: #94A3B8;
+    transition: color 0.3s;
 }
 
-#msg-error {
-  text-align: center;
-  color: #ff0000;
-  background-color: #ffbbbb;
-  padding: 10px;
-  border-radius: 4px;
-  display: none;
-  margin-bottom: 15px;
+.fa-eye:hover {
+    color: #10B981;
+}
+
+/* BOTÃO MAIS FINO */
+button {
+    width: 100%;
+    padding: 12px; /* Reduzido */
+    background-color: #0F172A;
+    color: white;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    font-weight: 700;
+    font-size: 0.95rem;
+    transition: all 0.3s ease;
+    margin-top: 5px; /* Reduzido */
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+button:hover {
+    background-color: #10B981;
+    box-shadow: 0 8px 20px rgba(16, 185, 129, 0.4);
+    transform: translateY(-2px);
+}
+
+.justify-center {
+    display: flex;
+    justify-content: center;
+}
+
+#msg-error, #msg-success {
+    text-align: center;
+    padding: 10px;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    margin-bottom: 15px; /* Reduzido */
+    display: none;
+}
+
+#msg-error { color: #EF4444; background-color: #FEE2E2; border: 1px solid #FCA5A5; }
+#msg-success { color: #059669; background-color: #D1FAE5; border: 1px solid #6EE7B7; }
+
+p {
+    text-align: center;
+    margin-top: 15px; /* Reduzido */
+    font-size: 0.9rem;
+    color: #64748B;
+}
+
+a {
+    color: #10B981;
+    font-weight: 700;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+a:hover {
+    color: #059669;
+    text-decoration: underline;
 }

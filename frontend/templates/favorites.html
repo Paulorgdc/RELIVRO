@@ -1,38 +1,124 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-  <meta charset="UTF-8" />
-  <title>Meus Favoritos - RELIVRO</title>
-  <style>
-    body { font-family: 'georgia', serif; background-color: #e8f5e9; padding-top: 100px; margin: 0; }
-    .topo { background-color: #2e7d32; color: white; display: flex; justify-content: space-between; padding: 15px 30px; position: fixed; top: 0; width: 100%; box-sizing: border-box; }
-    .menu a { color: white; text-decoration: none; margin-left: 20px; font-weight: bold; }
-    .books-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 20px; padding: 20px; }
-    .book-card { background: white; padding: 15px; border-radius: 10px; text-align: center; }
-    .book-card img { width: 100%; height: 250px; object-fit: cover; }
-  </style>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Meus Favoritos - RELIVRO</title>
+    <link rel="stylesheet" href="../assets/css/style.css" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 <body>
-<header class="topo">
-  <div class="logo">Relivro</div>
-  <nav class="menu">
-    <a href="../index.html">Livros</a>
-    <a href="cart.html">Carrinho</a>
-  </nav>
-</header>
+    <header class="main-header">
+        <div class="header-content">
+            <a href="../index.html" class="logo-container" style="text-decoration: none;">
+                <img src="../assets/images/logo.jpeg" alt="Logo Relivro" class="header-logo">
+                <span class="logo">Relivro</span>
+            </a>
+            <nav class="nav-links">
+                <a href="favorites.html"><i class="fa fa-heart"></i> Meus Favoritos</a>
+                <a href="cart.html"><i class="fa fa-shopping-cart"></i> Meu Carrinho</a>
+            </nav>
+        </div>
+    </header>
 
-<h1 style="padding: 20px;">Meus Favoritos</h1>
-<div class="books-grid" id="favorites-container"></div>
+    <main class="cart-main-container">
+        <h1 class="page-title">Meus Favoritos</h1>
+        <div class="books-grid" id="favorites-container"></div>
+    </main>
 
-<script>
-  document.addEventListener('DOMContentLoaded', () => {
-    const favorites = JSON.parse(localStorage.getItem('favorites')) || [];
-    const container = document.getElementById('favorites-container');
-
-    if (favorites.length === 0) {
-      container.innerHTML = "<p>Nenhum favorito ainda.</p>";
+    <script>
+document.addEventListener("DOMContentLoaded", () => {
+    // Bloqueio de segurança e Nome do Usuário
+    const currentUser = sessionStorage.getItem("currentUser");
+    
+    if (!currentUser) {
+        window.location.href = "login.html"; 
+        return; 
     }
-  });
-</script>
+
+    const navContainer = document.querySelector('.nav-links');
+    if (navContainer) {
+        // Cria o link do usuário
+        const userLink = document.createElement('a');
+        userLink.href = "#";
+        userLink.innerHTML = `<i class="fa fa-user" style="margin-right: 5px;"></i> Olá, ${currentUser}`;
+        userLink.title = "Clique para sair da conta";
+        
+        // Adiciona a função de Deslogar
+        userLink.addEventListener("click", (e) => {
+            e.preventDefault();
+            if(confirm("Deseja sair da sua conta?")) {
+                sessionStorage.removeItem("currentUser");
+                window.location.href = "login.html";
+            }
+        });
+
+        // Insere o nome do usuário antes do botão "Meus Favoritos"
+        navContainer.insertBefore(userLink, navContainer.firstChild);
+    }
+    
+    const container = document.getElementById("favorites-container");
+    
+    function renderFavorites() {
+        const rawData = localStorage.getItem("favorites");
+        let favorites = JSON.parse(rawData) || [];
+        container.innerHTML = "";
+
+        // Filtra para garantir que os dados não estão corrompidos
+        const validFavorites = favorites.filter(book => typeof book === "object" && book !== null && book.title);
+
+        if (validFavorites.length === 0) {
+            container.innerHTML = `
+                <div class="empty-state">
+                    <i class="fa fa-heart" style="font-size: 4rem; color: #388e3c; margin-bottom: 15px;"></i>
+                    <p style="font-size: 1.2rem; color: #333; font-weight: 500; margin-bottom: 20px;">Você ainda não favoritou nenhum livro.</p>
+                    <a href="../index.html" class="btn" style="text-decoration: none; display: inline-block; width: auto;">Explorar Livros</a>
+                </div>
+            `;
+            return;
+        }
+
+        validFavorites.forEach((book, index) => {
+            const card = document.createElement("div");
+            card.className = "book-card";
+            card.innerHTML = `
+                <div class="favorite-icon active" onclick="removeFavorite(${index})">&#10084;</div>
+                <img src="../${book.image}" alt="${book.title}">
+                <h3>${book.title}</h3>
+                <p>Preço: R$ ${Number(book.price).toFixed(2)}</p>
+                <button class="btn" onclick="addToCartFromFavs(${index})">Comprar</button>
+            `;
+            container.appendChild(card);
+        });
+    }
+
+    window.removeFavorite = (index) => {
+        let favs = JSON.parse(localStorage.getItem("favorites")) || [];
+        favs.splice(index, 1);
+        localStorage.setItem("favorites", JSON.stringify(favs));
+        renderFavorites(); // Atualiza a tela na hora
+    };
+
+    window.addToCartFromFavs = (index) => {
+        let favs = JSON.parse(localStorage.getItem("favorites")) || [];
+        let cart = JSON.parse(localStorage.getItem("cart")) || [];
+        cart.push(favs[index]);
+        localStorage.setItem("cart", JSON.stringify(cart));
+        
+        // Efeito visual no botão de comprar dos favoritos
+        const btns = document.querySelectorAll("#favorites-container .btn");
+        if(btns[index]) {
+            btns[index].innerText = "Adicionado!";
+            btns[index].style.backgroundColor = "#1b5e20";
+            setTimeout(() => {
+                btns[index].innerText = "Comprar";
+                btns[index].style.backgroundColor = "#388e3c";
+            }, 1000);
+        }
+    };
+
+    renderFavorites();
+});
+    </script>
 </body>
 </html>

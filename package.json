@@ -8,8 +8,20 @@
   },
   "dependencies": {
     "cors": "^2.8.5",
-    "express": "^4.18.2",
-    "mercadopago": "^1.5.16",
-    "dotenv": "^16.3.1"
-  }
+    "dotenv": "^16.3.1",
+    "express": "^4.22.1",
+    "mercadopago": "^1.5.16"
+  },
+  "description": "",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Paulorgdc/RELIVRO.git"
+  },
+  "keywords": [],
+  "author": "",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/Paulorgdc/RELIVRO/issues"
+  },
+  "homepage": "https://github.com/Paulorgdc/RELIVRO#readme"
 }
