@@ -25,6 +25,7 @@
 
 ### Platform Entrance
 ![Login Screen](frontend/assets/screenshots/login.png)
+![Register Screen](frontend/assets/screenshots/register.png)
 
 ### Shopping Experience
 <p align="center">
